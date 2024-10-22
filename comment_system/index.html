@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Section</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>Discussion Forum</h2>
+        <div class="logout">
+            <form action="logout.php" method="POST">
+                <button type="submit" class="logout-button">Sign Out</button>
+            </form>
+        </div>
+        
+        <div class="comment-section">
+            <div id="comment-list" style="overflow-y: auto;">
+                Existing comments will be dynamically loaded here 
+            </div>
+
+            <form id="comment-form" action="add_comments.php" method="POST">
+                <textarea id="comment_text" name="comment_text" placeholder="Write your comment here..." required></textarea>
+                <div class="button-group">
+                    <button type="submit">Post Comment</button>
+                    <button type="button" id="clear-button">Clear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Function to load comments from the server
+            function loadComments() {
+                $.ajax({
+                    url: 'load_comments.php', // This PHP file will retrieve the comments from the database
+                    method: 'GET',
+                    success: function(data) {
+                        $('#comment-list').html(data); // Update the comment list dynamically
+
+                        // Scroll to the bottom of the comment list
+                        var commentList = document.getElementById('comment-list');
+                        commentList.scrollTop = commentList.scrollHeight;
+                    }
+                });
+            }
+
+            // Load comments when the page loads
+            loadComments();
+
+            // Handle form submission via AJAX
+            $('#comment-form').submit(function(event) {
+                event.preventDefault(); // Prevent form from submitting normally
+
+                var commentData = $(this).serialize(); // Get form data
+
+                $.ajax({
+                    url: 'add_comments.php', // The PHP file to handle form submission
+                    method: 'POST',
+                    data: commentData,
+                    success: function(response) {
+                        $('#comment_text').val(''); // Clear the comment textarea
+                        loadComments(); // Reload comments after submission
+                    },
+                    error: function() {
+                        alert('Error posting comment. Please try again.');
+                    }
+                });
+            });
+
+            // Handle clear button functionality
+            $('#clear-button').click(function() {
+                $('#comment_text').val(''); // Clear the comment textarea
+            });
+        });
+    </script>
+</body>
+</html>

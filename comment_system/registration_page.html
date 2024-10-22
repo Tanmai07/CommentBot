@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="register-container">
+        <h1>Register</h1>
+        <form action="register.php" method="POST" onsubmit="return validatePassword()">
+            <input type="text" placeholder="Full Name" name="full_name" required>
+            <input type="email" placeholder="Email" name="email" required>
+            <input type="password" placeholder="Password" name="password" id="password" required>
+            <button type="submit">Register</button>
+        </form>
+
+        <!-- Already registered? Login link -->
+        <p class="redirect-link">Already registered? <a href="login_page.html">Login here</a></p>
+
+        <script>
+            // Function to validate the password (6-8 characters, digits or alphabets)
+            function validatePassword() {
+                var password = document.getElementById('password').value;
+                var passwordPattern = /^[A-Za-z0-9]{6,8}$/;
+
+                if (!passwordPattern.test(password)) {
+                    alert("Password must be 6-8 characters and contain only letters and numbers.");
+                    return false;
+                }
+                return true;
+            }
+
+            // Function to get query parameters from the URL
+            function getQueryParameter(param) {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            // Check if there is a message in the URL and show an alert
+            window.onload = function() {
+                var message = getQueryParameter("message");
+                if (message) {
+                    alert(message);
+                }
+            };
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instabot Admin Dashboard</title>
+    <link rel="stylesheet" href="stylecbd.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">CommentBot</div>
+        <nav>
+            <div class="profile-dropdown">
+                <button class="dropbtn">Profile</button>
+                <div class="dropdown-content">
+                    <a href="logout.php">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+       
+        <main class="main-dashboard">
+            <section class="overview">
+                <div class="stat">
+                    <h3>Total Comments Scanned</h3>
+                    <p id="total-comments">Loading...</p>
+                </div>
+                <div class="stat">
+                    <h3>Total Vulgar Comments Deleted</h3>
+                    <p id="total-deleted-comments">Loading...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        console.log("Inline script executed!");
+    </script>
+    <script src="scriptcbd.js"></script>
+</body>
+
+</html>
